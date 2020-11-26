@@ -21,14 +21,15 @@
     <script src="../plugins/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
      <script src="../plugins/bootstrap-4.5.3-dist/css/bootstrap-grid.min.css"></script>
     
-   
+
 
     <title>publialda</title>
 </head>
 <body>
+
     <h1 align = "center">pagina de publialda</h1>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="https://www.publialda.com/">pag, publialda </a>
+        <a class="navbar-brand" href="https://www.publialda.com/">publialda </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,38 +43,48 @@
         </div>
       </nav>
     <div class="row">
-        <div class="col-6">
-            <form action="action_page.php" style="border:1px solid #ccc">
+        <div class="col-4">
+            <form action="/" style="border:1px solid #ccc">
                 <div class="container">
                     <h1>AGREGAR NUEVO REGISTRO</h1>
                     <p>introdusca los datos del cliente </p>
                     <hr>
-                   
                     </div>
+
+                
                     <div class="form-group">
-                    <label for="email"><b>Email</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Email" id="email" required>
+                    <label for="nombre"><b>Nombre</b></label>
+                    <input type="text" class="form-control" placeholder="introdusca nombre" id="nombre" required>
+                        
+                    </div>
+
+                    <div class="form-group">
+                    <label for="psw"><b>Apellido</b></label>
+                    <input type="text" class="form-control"  placeholder="introdusca Apellido" id="apellido" required>
+                        
+                    </div>
+                    <div class="form-group" id="select">
+                        <label for="pais"><b>seleccione un pis</b></label>
+                        <select class="form-control" name ="pais" id="pais">
+                            <option value="colombia">colombia</option>
+                            <option value="ecuador">ecuador</option>
+                            <option value="mexico">mexico</option>
+                            <option value="peru">peru</option>
+
+                        </select>
                         
                     </div>
                     <div class="form-group">
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" class="form-control"  placeholder="Enter Password" id="psw" required>
-                        
-                    </div>
-                    <div class="form-group">
-                        <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="password" class="form-control" placeholder="Repeat Password" id="psw-repeat" required>
-                        
-                    </div>
-                    <label>
-                        <input type="checkbox" checked="checked" id="remember" style="margin-bottom:15px"> Remember me
-                    </label>
+                        <label for="psw"><b>Ciudad</b></label>
+                        <input type="text" class="form-control"  placeholder="introdusca ciudad" id="ciudad" required>
+                            
+                        </div>
         
                     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
         
                     <div class="clearfix">
                         <button type="button" class="btn btn-danger">Cancel</button>
-                        <button type="submit" class="btn btn-success">Registrar</button>
+                        <button type="button" id="registros" class="btn btn-success" >Registrar</button>
                     </div>
                 </div>
             </form>
@@ -123,26 +134,39 @@
 
 
 <!-- ================== SCRIPTS JS ================== -->
+<script src="../js/dom.js"></script>
 <script>
-     $(document).ready( function () {
-        $('#data_table').DataTable({
-            //para cambiar el lenguaje a español
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sSearch": "Buscar:",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast":"Último",
-                    "sNext":"Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "sProcessing":"Procesando...",
-            }
-        });
+    tabla = $('#data_table').DataTable({
+        //para cambiar el lenguaje a español
+        "language": {
+            "lengthMenu": "Mostrar MENU registros",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando registros del START al END de un total de TOTAL registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de MAX registros)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast":"Último",
+                "sNext":"Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "sProcessing":"Procesando...",
+        }
+    });
+    $('#registros').on('click', function () {
+        nombre = document.getElementById('nombre').value;
+        apellido = $('#apellido').val();
+        ciudad = document.getElementById('ciudad').value;
+        pais = document.getElementById('pais').value;
+        tabla.row.add( [
+            tabla.rows().count()+1,
+            nombre,
+            apellido,
+            ciudad,
+            pais,
+        ] ).draw( false );
+        $($('table').find('tbody').find('tr')[tabla.rows().count()-1]).find('td')[0].setAttribute('align', 'center')
     });
 </script>
 </body>
